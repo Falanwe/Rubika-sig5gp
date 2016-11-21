@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CardBattle.Game
+namespace CardBattle.Infrastructure
 {
     public class CardDealer
     {
-        private readonly Random _rand = new Random();
         private static readonly int _suitsCount = Enum.GetValues(typeof(Suit)).Length;
         private static readonly int _valuesCount = Enum.GetValues(typeof(Values)).Length;
 
         private List<Card> _availableCards;
         private readonly Object _lock = new object();
+        private readonly RandomProvider _randomProvider;
+
         private List<Card> AvailableCards
         {
             get
@@ -37,8 +38,9 @@ namespace CardBattle.Game
             }
         }
 
-        public CardDealer()
+        public CardDealer(RandomProvider randomProvider)
         {
+            _randomProvider = randomProvider;
             Shuffle();
         }
 
@@ -59,7 +61,7 @@ namespace CardBattle.Game
                 throw new InvalidOperationException("Nocard available.");
             }
 
-            var index = _rand.Next(AvailableCards.Count);
+            var index = _randomProvider.Random.Next(AvailableCards.Count);
 
             var result = AvailableCards[index];
 

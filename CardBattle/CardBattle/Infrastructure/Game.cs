@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CardBattle.Game
+namespace CardBattle.Infrastructure
 {
     public class Game
     {
@@ -24,12 +24,14 @@ namespace CardBattle.Game
         private readonly List<Card>[] _hands;
 
         private readonly CardDealer _dealer;
+        private readonly ILogger _logger;
 
-        public Game(CardDealer dealer, List<IPlayer> players, int handSize)
+        public Game(CardDealer dealer, List<IPlayer> players, int handSize, ILogger logger)
         {
             _players = players;
             _handSize = handSize;
             _dealer = dealer;
+            _logger = logger;
 
             _scores = new List<int>(players.Select(p => 0));
             _hands = new List<Card>[PlayersCount];
@@ -65,7 +67,7 @@ namespace CardBattle.Game
                     throw new InvalidOperationException(_players[i].Name + "is a cheater!");
                 }
 
-                Console.WriteLine(card);
+                _logger.Log(LogLevel.Debug, card.ToString());
                 cardsPlayed.Add(card);
             }
 
@@ -75,7 +77,7 @@ namespace CardBattle.Game
             {
                 player.ReceiveFoldResult(result);
             }
-            Console.WriteLine("[" + string.Join(", ", result.CardsPlayed.Select(c => c.ToString()).ToArray()) + "] => " + result.Winner);
+            _logger.Log(LogLevel.Debug, "[" + string.Join(", ", result.CardsPlayed.Select(c => c.ToString()).ToArray()) + "] => " + result.Winner);
             return result;
         }
     }

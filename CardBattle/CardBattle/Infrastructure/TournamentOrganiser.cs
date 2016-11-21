@@ -5,13 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CardBattle.Game
+namespace CardBattle.Infrastructure
 {
     public class TournamentOrganiser
     {
         private readonly List<IPlayer> _players;
         private readonly CardDealer _dealer;
+        private readonly ILogger _logger;
+
         private List<int> _scores;
+
         public IEnumerable<int> Scores
         {
             get
@@ -32,10 +35,11 @@ namespace CardBattle.Game
             }
         }
 
-        public TournamentOrganiser(IEnumerable<IPlayer> players, CardDealer dealer)
+        public TournamentOrganiser(IEnumerable<IPlayer> players, CardDealer dealer, ILogger logger)
         {
             _players = players.ToList();
             _dealer = dealer;
+            _logger = logger;
 
             _scores = new List<int>(players.Select(p => 0));
 
@@ -58,19 +62,19 @@ namespace CardBattle.Game
             var winnerIndex = _scores.IndexOf(_scores.Max());
             var winner = _players[winnerIndex];
 
-            Console.WriteLine("Player " + winner.Name + " from " + winner.Author + " at position " + winnerIndex + " won the tournament.");
-    }
+            _logger.Log(LogLevel.Warning, "Player " + winner.Name + " from " + winner.Author + " at position " + winnerIndex + " won the tournament.");
+        }
 
         public void PlayGame()
         {
-            var game = new Game(_dealer, _players, HandSize);
+            var game = new Game(_dealer, _players, HandSize, _logger);
 
             var winnerIndex = game.PlayGame();
 
             _scores[winnerIndex]++;
 
             var winner = _players[winnerIndex];
-            Console.WriteLine("Player " + winner.Name + " from " + winner.Author + " at position " + winnerIndex + " won the game.");
+            _logger.Log(LogLevel.Info, "Player " + winner.Name + " from " + winner.Author + " at position " + winnerIndex + " won the game.");
         }
     }
 }

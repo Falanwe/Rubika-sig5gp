@@ -5,7 +5,7 @@ using System.Text;
 using CardBattle.Models;
 using System.IO;
 using Autofac;
-using CardBattle.Game;
+using CardBattle.Infrastructure;
 using CardBattle.Player;
 using CardBattle.Infrastructure;
 
@@ -76,7 +76,7 @@ namespace CardBattle
 
             Console.WriteLine("I created a card: " + spadesAce);
 
-            var dealer = new CardDealer();
+            var dealer = new CardDealer(new RandomProvider());
             for (var i = 0; i < 100; i++)
             {
                 var deck = new List<Card>();
