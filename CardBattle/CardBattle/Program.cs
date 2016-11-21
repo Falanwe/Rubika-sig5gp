@@ -7,7 +7,6 @@ using System.IO;
 using Autofac;
 using CardBattle.Infrastructure;
 using CardBattle.Player;
-using CardBattle.Infrastructure;
 
 namespace CardBattle
 {
@@ -16,8 +15,6 @@ namespace CardBattle
         static void Main(string[] args)
         {
             MaintTournament();
-            //MainCard();
-            //MainFibo();
         }
 
         private static void MaintTournament()
@@ -25,22 +22,22 @@ namespace CardBattle
             var builder = new ContainerBuilder();
             builder.RegisterType<CardDealer>();
             builder.RegisterType<RandomProvider>().SingleInstance();
-            builder.RegisterInstance(new ConsoleLogger { MinLevel = LogLevel.None }).As<ILogger>().SingleInstance();
+            builder.RegisterInstance(new ConsoleLogger { MinLevel = LogLevel.Warning }).As<ILogger>().SingleInstance();
             builder.RegisterAssemblyTypes(typeof(Program).Assembly).Where(t => t.IsAssignableTo<IPlayer>()).As<IPlayer>();
-            builder.RegisterType<TournamentOrganiser>();
+            builder.RegisterType<LeagueOrganizer>();
 
             var container = builder.Build();
 
             //var dealer = container.Resolve<CardDealer>();
 
-            var orga = container.Resolve<TournamentOrganiser>();
-                //new TournamentOrganiser(
+            var orga = container.Resolve<LeagueOrganizer>();
+            orga.RunLeague();
+                //new TournamentOrganiser(s
                 //new IPlayer[]
                 //{ new MaxValuePlayer(), new MaxValuePlayer() },
                 //dealer
                 //);
-
-            orga.PlayTournament();
+                
 
             Console.ReadLine();
         }

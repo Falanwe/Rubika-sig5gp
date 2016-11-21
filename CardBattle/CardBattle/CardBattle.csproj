@@ -58,8 +58,14 @@
     <Compile Include="Infrastructure\Game.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Infrastructure\ILogger.cs" />
+    <Compile Include="Infrastructure\LeagueOrganizer.cs" />
+    <Compile Include="Infrastructure\MatchDescription.cs" />
     <Compile Include="Infrastructure\RandomProvider.cs" />
     <Compile Include="Infrastructure\LogLevel.cs" />
+    <Compile Include="Player\AntoineAI.cs" />
+    <Compile Include="Player\BenoitV.cs" />
+    <Compile Include="Player\Gaspard.cs" />
+    <Compile Include="Player\Gerard.cs" />
     <Compile Include="Player\IPlayer.cs" />
     <Compile Include="Player\MinValuePlayer.cs" />
     <Compile Include="Player\MaxValuePlayer.cs" />
@@ -67,6 +73,10 @@
     <Compile Include="Models\FoldResult.cs" />
     <Compile Include="Models\Suit.cs" />
     <Compile Include="Models\Values.cs" />
+    <Compile Include="Player\PierrePlayer.cs" />
+    <Compile Include="Player\PoulpePlayer.cs" />
+    <Compile Include="Player\RobinM.cs" />
+    <Compile Include="Player\WillPlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sort.cs" />

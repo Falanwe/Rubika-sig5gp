@@ -69,12 +69,18 @@ namespace CardBattle.Infrastructure
         {
             var game = new Game(_dealer, _players, HandSize, _logger);
 
-            var winnerIndex = game.PlayGame();
+            game.PlayGame();
 
-            _scores[winnerIndex]++;
+            var scores = game.Scores;
 
-            var winner = _players[winnerIndex];
-            _logger.Log(LogLevel.Info, "Player " + winner.Name + " from " + winner.Author + " at position " + winnerIndex + " won the game.");
+            var maxScore = scores.Max();
+            for(var i = 0; i<PlayersCount; i++)
+            {
+                if(scores[i] == maxScore)
+                {
+                    _scores[i]++;
+                }
+            }
         }
     }
 }

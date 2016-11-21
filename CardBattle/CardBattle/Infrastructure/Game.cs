@@ -20,6 +20,13 @@ namespace CardBattle.Infrastructure
             }
         }
 
+        public IReadOnlyList<int> Scores
+        {
+            get
+            {
+                return _scores.AsReadOnly();
+            }
+        }
         private readonly List<int> _scores;
         private readonly List<Card>[] _hands;
 
